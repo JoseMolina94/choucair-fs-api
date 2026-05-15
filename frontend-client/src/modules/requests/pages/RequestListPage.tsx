@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { RequestListCard } from '../components/RequestListCard'
 import { useRequests } from '../hooks/useRequests'
-import { canChangeStatus } from '../utils/canChangeStatus'
-import './RequestListPage.css'
+import '../styles/RequestListPage.css'
 
 export function RequestListPage() {
   const { requests, isLoading, error, reload, addRequest, setStatus } =
@@ -80,35 +80,12 @@ export function RequestListPage() {
         <p className="requests-message">No hay solicitudes.</p>
       ) : (
         <ul className="requests-list">
-          {requests.map((request) => (
-            <li key={request.id} className="requests-item">
-              <div className="requests-item-body">
-                <strong>{request.title}</strong>
-                <span className={`status status-${request.status.toLowerCase()}`}>
-                  {request.status}
-                </span>
-                <time dateTime={request.createdAt}>
-                  {new Date(request.createdAt).toLocaleString()}
-                </time>
-              </div>
-              {canChangeStatus(request) && (
-                <div className="requests-actions">
-                  <button
-                    type="button"
-                    onClick={() => void handleStatusChange(request.id, 'APPROVED')}
-                  >
-                    Aprobar
-                  </button>
-                  <button
-                    type="button"
-                    className="danger"
-                    onClick={() => void handleStatusChange(request.id, 'REJECTED')}
-                  >
-                    Rechazar
-                  </button>
-                </div>
-              )}
-            </li>
+          {requests.map((request, index) => (
+            <RequestListCard
+              key={`requests-${index}`}
+              request={request}
+              onStatusChange={(id, status) => void handleStatusChange(id, status)}
+            />
           ))}
         </ul>
       )}

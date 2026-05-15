@@ -1,4 +1,4 @@
-export { RequestListPage } from './components/RequestListPage'
+export { RequestListPage } from './pages/RequestListPage'
 export { useRequests } from './hooks/useRequests'
 export { canChangeStatus } from './utils/canChangeStatus'
 export type {
